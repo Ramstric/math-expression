@@ -1,0 +1,120 @@
+---
+import '../styles/global.css'
+
+import Welcome from '../components/Welcome.astro';
+import Layout from '../layouts/Layout.astro';
+
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+---
+
+<Layout>
+	<div class="hero">
+		<div class="title">
+			<h1>CNN powered <i style="color: var(--red);">Math Expression Translator</i></h1>
+			<h2>Convert images of math expressions to LaTeX and Python code</h2>
+		</div>
+		<p>By inputting images of <i style="color: var(--blue);">math expressions</i> (equations, polynomials, functions, etc) this tool is able to segment and classify each character in the expression, which in return outputs a <i style="color: var(--orange);">LaTeX code</i> and <i style="color: var(--red);">Python function code</i> of the expression.</p>
+	</div>
+
+	<div class="upload">
+		<h2>First, upload an image or picture of the math expression!</h2>
+		<div class="area">
+			<div class="bg">
+				<div class="fg">
+					<h3><t style="color: var(--primary);">Choose</t> a file or <t style="color: var(--primary);">drag</t> it here.</h3>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="results">
+		<h2>Finally, check the code output!</h2>
+		<div class="area">
+			<div class="latex">
+				<h3>Your <i style="color: var(--orange);">LaTeX</i> code...</h3>
+				<div class="code"></div>
+			</div>
+			<div class="python">
+				<h3>Your <i style="color: var(--yellow);">Py</i><i style="color: var(--blue	);">thon</i> code...</h3>
+				<div class="code"></div>
+			</div>
+		</div>
+	</div>
+</Layout>
+
+<style>
+	.hero {
+		height: fit-content;
+		gap: 50px;
+		color: var(--primary);
+	}
+	.title {
+		gap: 5px;
+	}
+	.title h2 {
+		color: var(--secondary);
+	}
+
+	.upload {
+		height: fit-content;
+		gap: 50px;
+		color: var(--primary);
+	}
+
+	.upload .area {
+		padding: 0 150px;
+	}
+
+	.upload .area .bg {
+		padding: 10px 10px;
+		border: 2px solid var(--primary);
+		background-color: var(--black);
+		border-radius: 25px;
+	}
+
+	.upload .area .fg {
+		gap: 25px;
+		padding: 125px 0;
+		background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='25' ry='25' stroke='%23333' stroke-width='2' stroke-dasharray='6%2c 14' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+		color: var(--secondary);
+		border-radius: 25px;
+	}
+
+	.upload .area .fg h3 {
+		width: fit-content;
+	}
+
+	.results {
+		height: fit-content;
+		gap: 50px;
+		color: var(--primary);
+	}
+
+	.results .area {
+		gap: 50px;
+		padding: 0 50px;
+	}
+
+	.results .area .latex {
+		gap: 15px;
+	}
+
+	.results .area .latex .code {
+		padding: 25px 50px;
+		border-radius: 25px;
+		background-color: var(--black);
+		border-radius: 25px;
+	}
+
+	.results .area .python {
+		gap: 15px;
+	}
+
+	.results .area .python .code {
+		padding: 25px 50px;
+		border-radius: 25px;
+		background-color: var(--black);
+		border-radius: 25px;
+	}
+</style>

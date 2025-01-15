@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>CNN Tool</title>
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>
+
+<style>
+	body {
+		margin: 0;
+		padding: 100px clamp(1.25rem, -22.5rem + 39.583vw, 25rem); /* VW Range 960px - 1920 px | Target Values 20px - 400px */
+		width: 100%;
+		height: 100%;
+		gap: 50px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+</style>
