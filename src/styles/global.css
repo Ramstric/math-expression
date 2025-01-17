@@ -1,16 +1,22 @@
 @font-face {
   font-family: "Manrope";
   font-weight: 200 800;
-  src: url("/public/fonts/Manrope-VariableFont_wght.ttf") format("truetype");
+  src: url("cnn-math-expressions/public/fonts/Manrope-VariableFont_wght.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "FiraCode";
+  font-weight: 300 700;
+  src: url("cnn-math-expressions/public/fonts/FiraCode-VariableFont_wght.ttf") format("truetype");
 }
 
 :root {
   /* --------------- Desktop Font Options --------------- */
-  --h1-desktop: 45px;
-  --h2-desktop: 28px;
-  --h3-desktop: 22px;
+  --h1-desktop: 38px;
+  --h2-desktop: 24px;
+  --h3-desktop: 20px;
 
-  --p-desktop: 16px;
+  --p-desktop: 18px;
 
   --footer-desktop: 10px;
 
@@ -20,12 +26,20 @@
   --gray: #635c5a;
   --blue: #598ade;
   --red: #eb4964;
+  --green: #4cd964;
+  --cyan: #2cebcf;
   --orange: #ff7c65;
+  --purple: #a55eea;
   --yellow: #f5b255;
+  --brown: #b0886d;
+  --pink: #ff7eb6;
 
   --background: #101010;
   --primary: var(--white);
   --secondary: var(--gray);
+
+  /* --------- Custom styles for specific elements --------- */
+  --upload-area-hover: var(--primary)
 }
 
 /* ------------------ Common elements ------------------ */
@@ -49,7 +63,6 @@ div {
 html {
   background-color: var(--background);
   font-optical-sizing: auto;
-  /*overflow-x: hidden;*/
   overflow-x: hidden;
   overscroll-behavior: none;
 }
@@ -86,4 +99,8 @@ i {
 
 b {
   font-weight: 700;
+}
+
+code * {
+  font-family: FiraCode, monospace;
 }

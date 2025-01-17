@@ -1,28 +1,42 @@
 ---
 import '../styles/global.css'
 
-import Welcome from '../components/Welcome.astro';
+import Button from '../components/Button.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
+<script src="../scripts/upload-img.js"></script>
 
 <Layout>
+
 	<div class="hero">
-		<div class="title">
+		<div class="hero-title">
 			<h1>CNN powered <i style="color: var(--red);">Math Expression Translator</i></h1>
 			<h2>Convert images of math expressions to LaTeX and Python code</h2>
 		</div>
-		<p>By inputting images of <i style="color: var(--blue);">math expressions</i> (equations, polynomials, functions, etc) this tool is able to segment and classify each character in the expression, which in return outputs a <i style="color: var(--orange);">LaTeX code</i> and <i style="color: var(--red);">Python function code</i> of the expression.</p>
+		<p>By inputting images of <i style="color: var(--red);">math expressions</i> (equations, polynomials, functions, etc) this tool is able to segment and classify each character in the expression, which in return outputs a <i style="color: var(--green);">LaTeX code</i> and <i style="color: var(--yellow);">Py</i><i style="color: var(--blue);">thon function code</i> of the expression.</p>
 	</div>
 
 	<div class="upload">
 		<h2>First, upload an image or picture of the math expression!</h2>
-		<div class="area">
-			<div class="bg">
+		<div class="upload-container" >
+			<input type="file" id="file-input" accept="image/*" style="display: none;" />
+			<div class="bg" id="dropArea">
 				<div class="fg">
-					<h3><t style="color: var(--primary);">Choose</t> a file or <t style="color: var(--primary);">drag</t> it here.</h3>
+					<svg id="upload-svg" width="45px" height="45px" viewBox="0 0 24 24">
+						<path d="M12.5535 2.49392C12.4114 2.33852 12.2106 2.25 12 2.25C11.7894 2.25 11.5886 2.33852 11.4465 2.49392L7.44648 6.86892C7.16698 7.17462 7.18822 7.64902 7.49392 7.92852C7.79963 8.20802 8.27402 8.18678 8.55352 7.88108L11.25 4.9318V16C11.25 16.4142 11.5858 16.75 12 16.75C12.4142 16.75 12.75 16.4142 12.75 16V4.9318L15.4465 7.88108C15.726 8.18678 16.2004 8.20802 16.5061 7.92852C16.8118 7.64902 16.833 7.17462 16.5535 6.86892L12.5535 2.49392Z"/>
+						<path d="M3.75 15C3.75 14.5858 3.41422 14.25 3 14.25C2.58579 14.25 2.25 14.5858 2.25 15V15.0549C2.24998 16.4225 2.24996 17.5248 2.36652 18.3918C2.48754 19.2919 2.74643 20.0497 3.34835 20.6516C3.95027 21.2536 4.70814 21.5125 5.60825 21.6335C6.47522 21.75 7.57754 21.75 8.94513 21.75H15.0549C16.4225 21.75 17.5248 21.75 18.3918 21.6335C19.2919 21.5125 20.0497 21.2536 20.6517 20.6516C21.2536 20.0497 21.5125 19.2919 21.6335 18.3918C21.75 17.5248 21.75 16.4225 21.75 15.0549V15C21.75 14.5858 21.4142 14.25 21 14.25C20.5858 14.25 20.25 14.5858 20.25 15C20.25 16.4354 20.2484 17.4365 20.1469 18.1919C20.0482 18.9257 19.8678 19.3142 19.591 19.591C19.3142 19.8678 18.9257 20.0482 18.1919 20.1469C17.4365 20.2484 16.4354 20.25 15 20.25H9C7.56459 20.25 6.56347 20.2484 5.80812 20.1469C5.07435 20.0482 4.68577 19.8678 4.40901 19.591C4.13225 19.3142 3.9518 18.9257 3.85315 18.1919C3.75159 17.4365 3.75 16.4354 3.75 15Z"/>
+					</svg>
+					<p id="upload-state-0"> <span id="choose-1"><span>Choose</span> a file</span> or <span id="drag-1"><span>drag</span> it here.</span></p>
+					<p id="upload-state-1">Please wait a minute...</p>
+					<img src="" id="upload-preview" alt="Preview">
+				</div>
+
+				<div class="options" id="upload-state-2">
+					<div class="file-correct">
+						<p>Image uploaded successfully!</p>
+						<Button id="start-bttn" innerHtml="Start process" type="invert" labelcolor="var(--background)" bgcolor="var(--primary)" />
+					</div>
+					<p>You can also <span id="choose-2">choose</span> or <span id="drag-2">drag</span> another file...</p>
 				</div>
 			</div>
 		</div>
@@ -30,91 +44,148 @@ import Layout from '../layouts/Layout.astro';
 
 	<div class="results">
 		<h2>Finally, check the code output!</h2>
-		<div class="area">
+		<div class="results-container">
 			<div class="latex">
-				<h3>Your <i style="color: var(--orange);">LaTeX</i> code...</h3>
-				<div class="code"></div>
+				<p>Your <i style="color: var(--green);">LaTeX</i> code...</p>
+				<div class="code" id="latex-code"></div>
 			</div>
 			<div class="python">
-				<h3>Your <i style="color: var(--yellow);">Py</i><i style="color: var(--blue	);">thon</i> code...</h3>
-				<div class="code"></div>
+				<p>Your <i style="color: var(--yellow);">Py</i><i style="color: var(--blue	);">thon</i> code...</p>
+				<div class="code" id="python-code"></div>
 			</div>
 		</div>
 	</div>
 </Layout>
 
 <style>
+	/* #region Hero */
 	.hero {
 		height: fit-content;
 		gap: 50px;
+
 		color: var(--primary);
 	}
-	.title {
-		gap: 5px;
-	}
-	.title h2 {
-		color: var(--secondary);
-	}
+	.hero-title {gap: 5px;}
+	.hero-title h2 {color: var(--secondary);}
+	/* #endregion */
 
+	/* #region Upload */
 	.upload {
 		height: fit-content;
 		gap: 50px;
+		
 		color: var(--primary);
 	}
-
-	.upload .area {
-		padding: 0 150px;
-	}
-
-	.upload .area .bg {
+	.upload-container {padding: 0 150px;}
+	.upload-container .bg {
 		padding: 10px 10px;
+		gap: 40px;
+
 		border: 2px solid var(--primary);
-		background-color: var(--black);
-		border-radius: 25px;
+		border-radius: 10px;
+		transition: background-color 0.2s;
 	}
-
-	.upload .area .fg {
-		gap: 25px;
+	.upload-container .fg {
 		padding: 125px 0;
-		background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='25' ry='25' stroke='%23333' stroke-width='2' stroke-dasharray='6%2c 14' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+		gap: 25px;
+		
+		border: 2px dashed var(--secondary);
+		border-radius: 10px;
 		color: var(--secondary);
-		border-radius: 25px;
+		transition: all 0.2s;
 	}
-
-	.upload .area .fg h3 {
+	.upload-container .fg p {
 		width: fit-content;
+
+		transition: color 0.2s, opacity 0.2s;
 	}
 
+	#upload-svg path:nth-child(1) {fill: var(--primary);}
+	#upload-svg path:nth-child(2) {fill: var(--secondary);}
+
+	.fg:hover {
+		background-color: var(--upload-area-hover);
+		cursor: pointer;
+	}
+	.fg:hover #upload-state-0 {color: var(--primary);}
+	#choose-1 > span {color: var(--primary);}
+	.fg:hover #choose-1, .fg:hover #choose-1 > span  {color: var(--red);}
+	.fg:hover #upload-svg path {fill: var(--red);}
+	
+	.drag-hover .fg {background-color: var(--upload-area-hover);}
+	.drag-hover #upload-state-0 {color: var(--primary);}
+	#drag-1 > span {color: var(--primary);}
+	.drag-hover #drag-1, .drag-hover #drag-1 > span  {color: var(--blue);}
+	.drag-hover #upload-svg path {fill: var(--blue);}
+	
+
+
+	#upload-state-1 {
+		display: none;
+
+		opacity: 0;
+		color: var(--primary);
+		transition: opacity 0.2s;
+	}
+
+	#upload-preview {
+		display: none;
+		max-width: 150px;
+		border-radius: 10px;
+	}
+
+	#upload-state-2 {
+		display: none;
+		width: fit-content;
+		justify-items: center;
+		gap: 25px;
+
+		opacity: 0;
+		color: var(--secondary);
+		transform: translateY(-50px);
+		transition: opacity 0.2s, transform 0.2s;
+	}
+
+	#upload-state-2 .file-correct {color: var(--primary);}
+
+	#upload-state-2 * {transition: color 0.2s;}
+
+	.fg:hover ~ #upload-state-2 #choose-2 {color: var(--red);}
+	.drag-hover #upload-state-2 #drag-2 {color: var(--blue);}
+
+	.file-correct {gap: 5px;}
+	.options > * {width: fit-content;}
+	/* #endregion */
+	
+	/* #region Results */
 	.results {
 		height: fit-content;
 		gap: 50px;
+		
 		color: var(--primary);
 	}
 
-	.results .area {
+	.results-container {
 		gap: 50px;
 		padding: 0 50px;
 	}
 
-	.results .area .latex {
-		gap: 15px;
-	}
+	.results-container .latex {gap: 15px;}
 
-	.results .area .latex .code {
+	.code {
 		padding: 25px 50px;
+
 		border-radius: 25px;
-		background-color: var(--black);
-		border-radius: 25px;
+		background-color: var(--black);		
 	}
 
-	.results .area .python {
-		gap: 15px;
-	}
-
-	.results .area .python .code {
-		padding: 25px 50px;
-		border-radius: 25px;
-		background-color: var(--black);
-		border-radius: 25px;
-	}
+	.results-container .python {gap: 15px;}
+	/* #endregion */
 </style>
+
+<svg width="0" height="0" style="display:none">
+    <symbol id="upload" viewBox="0 0 24 24">
+		<path d="M12.5535 2.49392C12.4114 2.33852 12.2106 2.25 12 2.25C11.7894 2.25 11.5886 2.33852 11.4465 2.49392L7.44648 6.86892C7.16698 7.17462 7.18822 7.64902 7.49392 7.92852C7.79963 8.20802 8.27402 8.18678 8.55352 7.88108L11.25 4.9318V16C11.25 16.4142 11.5858 16.75 12 16.75C12.4142 16.75 12.75 16.4142 12.75 16V4.9318L15.4465 7.88108C15.726 8.18678 16.2004 8.20802 16.5061 7.92852C16.8118 7.64902 16.833 7.17462 16.5535 6.86892L12.5535 2.49392Z"/>
+		<path d="M3.75 15C3.75 14.5858 3.41422 14.25 3 14.25C2.58579 14.25 2.25 14.5858 2.25 15V15.0549C2.24998 16.4225 2.24996 17.5248 2.36652 18.3918C2.48754 19.2919 2.74643 20.0497 3.34835 20.6516C3.95027 21.2536 4.70814 21.5125 5.60825 21.6335C6.47522 21.75 7.57754 21.75 8.94513 21.75H15.0549C16.4225 21.75 17.5248 21.75 18.3918 21.6335C19.2919 21.5125 20.0497 21.2536 20.6517 20.6516C21.2536 20.0497 21.5125 19.2919 21.6335 18.3918C21.75 17.5248 21.75 16.4225 21.75 15.0549V15C21.75 14.5858 21.4142 14.25 21 14.25C20.5858 14.25 20.25 14.5858 20.25 15C20.25 16.4354 20.2484 17.4365 20.1469 18.1919C20.0482 18.9257 19.8678 19.3142 19.591 19.591C19.3142 19.8678 18.9257 20.0482 18.1919 20.1469C17.4365 20.2484 16.4354 20.25 15 20.25H9C7.56459 20.25 6.56347 20.2484 5.80812 20.1469C5.07435 20.0482 4.68577 19.8678 4.40901 19.591C4.13225 19.3142 3.9518 18.9257 3.85315 18.1919C3.75159 17.4365 3.75 16.4354 3.75 15Z"/>
+	</symbol>
+</svg>

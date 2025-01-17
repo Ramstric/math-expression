@@ -9,6 +9,11 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.1.7"
+    "astro": "^5.1.7",
+    "highlight.js": "^11.11.1",
+    "mathjax": "^3.2.2"
+  },
+  "devDependencies": {
+    "shiki": "^1.27.2"
   }
 }
