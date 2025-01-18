@@ -1,13 +1,154 @@
 const dropArea = document.getElementById("dropArea");
 const latex_code = document.getElementById("latex-code");
 const python_code = document.getElementById("python-code");
-const url_backend = "http://127.0.0.1:5000";
 const startButton = document.getElementById("start-bttn");
 const file_input = document.getElementById("file-input");
 const upload_svg = document.getElementById("upload-svg");
+
+const url_backend = "http://127.0.0.1:5000";
+
 let fileInput = null;
+let numSegments = 0;
+
+
+
+function fileUpload(files) {
+  try {
+    assertFileTypes(files[0]);
+  } catch (error) {
+    alert(error.message);
+    return;
+  }
+
+  changeUploadState(1);
+
+  POSTfile(files[0]);
+}
+
+function assertFileTypes(file) {
+  const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+
+  if (!allowedTypes.includes(file.type)) {
+    throw new Error("Invalid file type");
+  }
+}
+
+function POSTfile(file) {
+  const data = new FormData();
+
+  data.append("file", file);
+
+  fetch(url_backend + "/upload", {
+    method: "POST",
+    body: data,
+  })
+    .then((response) => {
+      console.log("Success:", response.json());
+      setTimeout(() => changeUploadState(2, file), 1000);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      changeUploadState(0);
+      return;
+    });
+
+  fileInput = file;
+}
+
+
+
 
 import { codeToHtml } from "shiki";
+
+
+async function getCodePrediction() {
+  const processing_div = document.getElementsByClassName("processing")[0];
+  const results_div = document.getElementsByClassName("results")[0];
+
+  await fetch(url_backend + "/process", { method: "GET" }).then((response) => {
+    response.json().then((data) => {
+      numSegments = data["num_segments"];
+      console.log(numSegments);
+    });
+  });
+
+  await fetch(url_backend + "/download?image=processed", {
+    method: "GET",
+  }).then((response) => {
+    response.blob().then((blob) => {
+      document.getElementById("img-processed").src = URL.createObjectURL(blob);
+    });
+  });
+
+  await fetch(url_backend + "/download?image=contours", {
+    method: "GET",
+  }).then((response) => {
+    response.blob().then((blob) => {
+      document.getElementById("img-contours").src = URL.createObjectURL(blob);
+    });
+  });
+
+  
+
+  const segmentsContainer = document.getElementById("segments-container");
+
+  // Clear segments container
+  segmentsContainer.innerHTML = "";
+
+  for (let i = 0; i < numSegments; i++) {
+    await fetch(url_backend + "/download?image=segmented&n=" + i, {
+      method: "GET",
+    }).then((response) => {
+      response.blob().then((blob) => {
+        const img = document.createElement("img");
+        img.src = URL.createObjectURL(blob);
+        img.style.width = "50px";
+        segmentsContainer.appendChild(img);
+      });
+    });
+  }
+
+  processing_div.style.display = "flex";
+  results_div.style.display = "flex";
+
+  processing_div.scrollIntoView({ behavior: "smooth" });
+  const data = new FormData();
+
+  data.append("file", fileInput);
+
+  await fetch(url_backend + "/predict", { method: "GET" }).then((response) => {
+    response.json().then((data) => {
+      console.log(data);
+
+      codeToHtml(data["latex"], {
+        lang: "latex",
+        theme: "one-dark-pro",
+        colorReplacements: {
+          "#282c34": "#0b0b0b",
+        },
+      }).then((html) => {
+        latex_code.innerHTML = html;
+      });
+
+      codeToHtml(data["python"], {
+        lang: "python",
+        theme: "one-dark-pro",
+        colorReplacements: {
+          "#282c34": "#0b0b0b",
+        },
+      }).then((html) => {
+        python_code.innerHTML = html;
+      });
+    });
+  });
+}
+
+startButton.addEventListener("click", getCodePrediction);
+
+
+
+
+
 
 function dropAreaInit() {
   dropArea.addEventListener("dragenter", (event) => {
@@ -37,81 +178,6 @@ file_input.addEventListener("change", (event) => {
   fileUpload(event.target.files);
 });
 
-function fileUpload(files) {
-
-    try {
-      assertFileTypes(files[0]);
-    } catch (error) {
-      alert(error.message);
-      return;
-    }
-
-    changeUploadState(1);
-
-    POSTfile(files[0]);
-}
-
-function assertFileTypes(file) {
-  const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
-
-  if (!allowedTypes.includes(file.type)) {
-    throw new Error("Invalid file type");
-  }
-}
-
-function POSTfile(file) {
-  const data = new FormData();
-
-  data.append("file", file);
-
-  fetch(url_backend + "/upload", {
-    method: "POST",
-    body: data,
-  })
-    .then((response) => {
-      console.log("Success:", response.json());
-      setTimeout(() => changeUploadState(2, file), 1000);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      changeUploadState(0);
-    });
-
-  fileInput = file;
-}
-
-function getCodePrediction() {
-  const data = new FormData();
-
-  data.append("file", fileInput);
-
-  fetch(url_backend + "/predict", { method: "GET" }).then((response) => {
-    response.json().then((data) => {
-      console.log(data);
-
-      codeToHtml(data["latex"], {
-        lang: "latex",
-        theme: "one-dark-pro",
-        colorReplacements: {
-          "#282c34": "#0b0b0b",
-        },
-      }).then((html) => {
-        latex_code.innerHTML = html;
-      });
-
-      codeToHtml(data["python"], {
-        lang: "python",
-        theme: "one-dark-pro",
-        colorReplacements: {
-          "#282c34": "#0b0b0b",
-        },
-      }).then((html) => {
-        python_code.innerHTML = html;
-      });
-    });
-  });
-}
-
 function changeUploadState(state, file = null) {
   const uploadStateInitial = document.getElementById("upload-state-0");
   const uploadStateLoading = document.getElementById("upload-state-1");
@@ -130,7 +196,10 @@ function changeUploadState(state, file = null) {
       foregroundArea.style.padding = "125px 0";
 
       setTimeout(() => {
-        foregroundArea.style.setProperty("--upload-area-hover", "var(--primary)")
+        foregroundArea.style.setProperty(
+          "--upload-area-hover",
+          "var(--primary)"
+        );
         upload_svg.style.display = "block";
 
         uploadStateInitial.style.opacity = 1;
@@ -140,7 +209,10 @@ function changeUploadState(state, file = null) {
 
   if (state === 1) {
     uploadStateInitial.style.opacity = 0;
-    foregroundArea.style.setProperty("--upload-area-hover", "var(--background)")
+    foregroundArea.style.setProperty(
+      "--upload-area-hover",
+      "var(--background)"
+    );
     upload_svg.style.display = "none";
     // Wait 0.2s for the opacity transition to finish
     setTimeout(() => {
@@ -159,7 +231,6 @@ function changeUploadState(state, file = null) {
         uploadStateResult.style.transform = "translateY(-50px)";
         uploadStateResult.style.opacity = 0;
         uploadPreview.style.opacity = 0;
-
       }, 100);
     }, 200);
   }
@@ -180,7 +251,10 @@ function changeUploadState(state, file = null) {
       setTimeout(() => {
         uploadStateResult.style.opacity = 1;
         uploadStateResult.style.transform = "translateY(0px)";
-        foregroundArea.style.setProperty("--upload-area-hover", "var(--primary)")
+        foregroundArea.style.setProperty(
+          "--upload-area-hover",
+          "var(--primary)"
+        );
 
         uploadPreview.style.opacity = 1;
       }, 100);
@@ -189,8 +263,9 @@ function changeUploadState(state, file = null) {
 }
 
 dropAreaInit();
-startButton.addEventListener("click", getCodePrediction);
+
 
 dropArea.firstElementChild.addEventListener("click", () => {
-  file_input.click(); 
+  file_input.value = null;
+  file_input.click();
 });
