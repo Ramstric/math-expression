@@ -13,22 +13,24 @@ async function startImageProcessing() {
   // Start the image processing and get the number of resulting segments
   await fetch(backendURL + "/process", { method: "GET" }).then((response) => {
     response.json().then((data) => {
+      console.log(data);
       numSegments = data["num_segments"];
     });
   });
 
   // Download the processed image
   await fetch(backendURL + "/download?image=processed", {
-    method: "GET",
+    method: "GET"
   }).then((response) => {
     response.blob().then((blob) => {
+      console.log(blob);
       document.getElementById("img-processed").src = URL.createObjectURL(blob);
     });
   });
 
   // Download the image with detected contours
   await fetch(backendURL + "/download?image=contours", {
-    method: "GET",
+    method: "GET"
   }).then((response) => {
     response.blob().then((blob) => {
       document.getElementById("img-contours").src = URL.createObjectURL(blob);
@@ -41,7 +43,7 @@ async function startImageProcessing() {
   // Download and display each segment
   for (let i = 0; i < numSegments; i++) {
     await fetch(backendURL + "/download?image=segmented&n=" + i, {
-      method: "GET",
+      method: "GET"
     }).then((response) => {
       response.blob().then((blob) => {
         const img = document.createElement("img");
