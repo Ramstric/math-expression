@@ -1,48 +1,28 @@
-# Astro Starter Kit: Basics
+# CNN-powered Math Expression Translator
 
-```sh
-npm create astro@latest -- --template basics
-```
+This is a web application (Project for Sistemas Inteligentes at UPM) that uses a Convolutional Neural Network (CNN) to translate handwritten math equations into LaTeX and Python function code.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## Demo
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+You can try out the demo [here](https://ramstric.github.io/cnn-math-expressions-website).
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+## Technologies Used
 
-## 🚀 Project Structure
+For the [custom API written in Python](https://github.com/Ramstric/cnn-math-expressions-api):
+- Flask
+- PyTorch & NumPy
+- OpenCV
 
-Inside of your Astro project, you'll see the following folders and files:
+For the website:
+- JavaScript
+- HTML/CSS
+- Astro Framework
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+## Contributing
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
 
-## 🧞 Commands
+## License
 
-All commands are run from the root of the project, from a terminal:
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
