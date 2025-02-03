@@ -1,6 +1,6 @@
 # CNN-powered Math Expression Translator
 
-This is a web application (Project for Sistemas Inteligentes at UPM) that uses a Convolutional Neural Network (CNN) to translate handwritten math equations into LaTeX and Python function code.
+This web application (Project for Sistemas Inteligentes at UPM) uses a Convolutional Neural Network (CNN) to translate handwritten math equations into LaTeX and Python function code.
 
 ## Demo
 
