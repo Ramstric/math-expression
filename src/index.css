@@ -1,0 +1,134 @@
+@font-face {
+    font-family: "Manrope";
+    font-weight: 200 800;
+    src: url("/fonts/Manrope-VariableFont_wght.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "FiraCode";
+    font-weight: 300 700;
+    src: url("/fonts/FiraCode-VariableFont_wght.ttf") format("truetype");
+}
+
+:root {
+    /* --------------- Desktop Font Options --------------- */
+    --h1-desktop: 42px;
+    --h2-desktop: 25px;
+    --h3-desktop: 20px;
+
+    --p-desktop: 18px;
+
+    --footer-desktop: 10px;
+
+    /* ---------------------- Colors ---------------------- */
+    --black:      #0b0b0b;
+    --dark:       #1c1c1c;
+    --gray:       #3c3c3c;
+    --light-gray: #787676;
+    --light:      #9f9d9d;
+    --white:      #ffece7;
+
+    --red:      #eb4964;
+    --crimson:  #f92f51;
+    --brown:    #8b4e3e;
+    --coral:    #e64e4e;
+    --orange:   #ff7c65;
+    --yellow:   #f5b255;
+    --lime:     #b2d235;
+    --green:    #49b258;
+    --teal:     #51d07f;
+    --cyan:     #5ec6cf;
+    --blue:     #598ade;
+    --ocean:    #4244cb;
+    --purple:   #463280;
+
+    --background: #101010;
+    --primary: var(--white);
+    --secondary: var(--gray);
+
+    --content-max-width: 1000px;
+
+    font-family: Manrope, serif;
+
+    color-scheme: light dark;
+    color: var(--primary);
+    background-color: var(--background);
+
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+* {
+    box-sizing: border-box;
+    
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+}
+
+html {
+    height: 100%;
+    
+    overflow-x: hidden;
+    overscroll-behavior: none;
+
+    background-color: var(--background);
+
+    font-optical-sizing: auto;
+}
+
+body {
+    display: flex;
+    place-items: center;
+    min-height: 100%;
+    margin: 0;
+}
+
+main, section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.center-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    font-size: var(--h1-desktop);
+    font-weight: 400;
+}
+
+h2 {
+    font-size: var(--h2-desktop);
+    font-weight: 300;
+}
+
+h3 {
+    font-size: var(--h3-desktop);
+    font-weight: 200;
+}
+
+p {
+    font-size: var(--p-desktop);
+    font-weight: 200;
+}
+
+footer * {
+    font-size: var(--footer);
+    font-weight: 200;
+}
+
+i {
+    font-weight: 200;
+}
+
+b {
+    font-weight: 700;
+}

@@ -1,0 +1,17 @@
+.results {
+    padding-bottom: 50px;
+
+    width: 100%;
+
+    gap: 50px;
+
+    & h2 {
+        place-self: flex-start;
+    }
+}
+
+.results__codes {
+    width: 70%;
+
+    gap: 25px;
+}

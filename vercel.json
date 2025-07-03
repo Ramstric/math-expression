@@ -1,0 +1,11 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "${MATH_EXPR_API_URL}/:path*",
+      "headers": {
+        "x-internal-api-key": "${MATH_EXPR_API_KEY}"
+      }
+    }
+  ]
+}

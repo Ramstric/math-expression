@@ -1,0 +1,27 @@
+button {
+    font-family: Manrope, serif;
+    font-size: var(--p-desktop);
+
+    padding: 10px;
+    border: none;
+    border-radius: 25px;
+    background-color: transparent;
+
+    color: var(--gray);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+    color: var(--white);
+}
+
+button.active {
+    color: var(--black);
+    background-color: var(--white);
+}
+
+button.active:hover {
+    color: var(--white);
+    background-color: var(--gray);
+}

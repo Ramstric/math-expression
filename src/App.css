@@ -1,0 +1,37 @@
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+.App {
+  height: fit-content;
+
+  gap: 50px;
+
+  padding-top: 50px;
+
+  & div {
+    max-width: var(--content-max-width);
+  }
+}
+
+.hero {
+  height: fit-content;
+
+  gap: 25px;
+}
+
+.hero__title {
+  place-self: flex-start !important;
+  place-items: flex-start !important;
+  
+  height: fit-content;
+
+  justify-content: flex-start;
+
+  gap: 5px;
+
+  & h2 {
+    color: var(--gray);
+  }
+}

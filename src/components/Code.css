@@ -1,0 +1,21 @@
+.code {
+    width: 100%;
+    height: fit-content;
+
+    place-items: flex-start !important;
+    gap: 16px;
+
+    & pre {
+        overflow: auto;
+    
+        padding: 15px 40px;
+        border-radius: 25px;
+    }
+
+    & pre, code {
+        width: 100%;
+        height: 100%;
+
+        background-color: var(--dark) !important;
+    }
+}

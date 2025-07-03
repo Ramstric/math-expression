@@ -1,1 +1,0 @@
-export const backendURL = "https://appimg-second-1000585019712.northamerica-northeast1.run.app";

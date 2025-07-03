@@ -1,0 +1,33 @@
+.preprocess {
+    width: 100%;
+    
+    gap: 50px;
+}
+
+.preprocess__masking, .preprocess__segmentation {
+    width: 100%;
+
+    gap: 25px;
+
+    & h2 {
+        align-self: flex-start;
+    }
+
+    & div {
+        width: fit-content;
+        
+        flex-direction: row;
+        gap: 50px;
+    }
+}
+
+#masking__image, #contour__image {
+    max-width: 300px;
+    max-height: 100px;
+    object-fit: cover;
+}
+
+
+.segment__image {
+    max-width: 50px;
+}
