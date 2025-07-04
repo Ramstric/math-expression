@@ -26,3 +26,6 @@ dist-ssr
 # Exclude environment files
 .env
 .env.local
+.env.*.local
+.vercel
+.env*.local

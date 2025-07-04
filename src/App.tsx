@@ -13,7 +13,7 @@ function App() {
   const [showPreprocessing, setShowPreprocessing] = useState<PreprocessingData | null>(null);
   
   useEffect(() => {
-    fetch(`/api`)
+    fetch("/api/math")
       .then(response => {
         if (!response.ok) {
           setAvailable(false);

@@ -111,7 +111,7 @@ export function Upload({ status, showComponentsHandler }: { status: boolean, sho
         
         try {
             setUploadState('wait');
-            const response = await fetch("/api/translate", { method: 'POST', body: formData });
+            const response = await fetch("/api/math/translate", { method: 'POST', body: formData });
             const data = await response.json();
 
             showComponentsHandler({

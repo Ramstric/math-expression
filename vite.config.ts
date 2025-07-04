@@ -18,8 +18,10 @@ export default defineConfig(({ mode }) => {
         ],
 
         base: process.env.VITE_BASE_PATH || "/",
-
+        
+        /*
         server: {
+      
             proxy: {
                 // Proxy API calls to your backend during development
                 "/api": {
@@ -34,6 +36,6 @@ export default defineConfig(({ mode }) => {
                     }
                 },
             },
-        },
+        },*/
     };
 });

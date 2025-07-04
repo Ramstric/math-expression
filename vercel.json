@@ -1,8 +1,9 @@
 {
-  "rewrites": [
+  "redirects": [
     {
-      "source": "/api/:path*",
-      "destination": "/api/proxy/:path*"
+      "source": "/api/data/(.*)/(.*)",
+      "destination": "/api/math/image?folder=$1&img=$2",
+      "permanent": true
     }
   ]
 }
